@@ -1,14 +1,15 @@
-import random
+from random import randint
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication, QWidget
 from PyQt5.QtGui import QColor, QPainter
 import sys
+from ui_file import Ui_MainWindow
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.pushButton.clicked.connect(self.drawCircle)
         self.x = 0
         self.y = 0
@@ -20,16 +21,16 @@ class MyWidget(QMainWindow):
             qp = QPainter()
             qp.begin(self)
             pen = qp.pen()
-            pen.setColor(QColor(255, 255, 0))
+            pen.setColor(QColor(randint(0,255),randint(0,255),randint(0,255)))
             pen.setWidth(3)
             qp.setPen(pen)
             qp.drawEllipse(self.x, self.y, self.diameter, self.diameter)
             qp.end()
 
     def drawCircle(self):
-        self.diameter = random.randint(50, 200)
-        self.x = random.randint(0, 742 - self.diameter)
-        self.y = random.randint(0, 562 - self.diameter)
+        self.diameter = randint(50, 200)
+        self.x = randint(0, 742 - self.diameter)
+        self.y = randint(0, 562 - self.diameter)
         self.circleDrawn = True
         self.update()
 
